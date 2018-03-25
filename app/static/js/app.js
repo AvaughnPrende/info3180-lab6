@@ -42,33 +42,34 @@ Vue.component('app-footer', {
 })
 
 
-Vue.component('news-item',{
+Vue.component('news-list',{
     template:`
         <div class="news">
             <h2>News</h2>
             <ul class="news__list">
-            <li class="news__item">News item 1</li>
-            <li class="news__item">News item 2</li>
-            <li class="news__item">News item 3</li>
+                <li v-for = 'article in articles' class = 'news__item'>
+                    {{ article.title }}
+                </li>
             </ul>
         </div>
         `,
         created: function(){
             let self = this;
+            
             fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=b63b2a1e8f914e8cad30a9aaaf6ada0c').then(
-                function(response){
-                    return response.json();
-                }).then(function(data){
-                    console.log(data)
-                    self.articles = data.articles;
-                })
-        },
-        data: function(){
-            return {
-                articles:[]
-            }
-        }
-})
+                function(response) {
+                    return response.json()
+                    ;}).then( 
+                        function(data) {
+                            console.log(data);
+                            self.articles = data.articles;
+                    });
+                },
+                data: function() {
+                    return { articles: [] }
+                }
+            });
+
 
 let app = new Vue({
     el: '#app',

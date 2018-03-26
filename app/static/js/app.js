@@ -46,6 +46,15 @@ Vue.component('news-list',{
     template:`
         <div class="news">
             <h2>News</h2>
+            <br><br>
+            <div class="form-inline d-flex justify-content-center">
+            <div class="form-group mx-sm-3 mb-2">
+            <label class="sr-only" for="search">Search</label>
+            <input type="search" name="search" v-model="searchTerm"
+            id="search" class="form-control mb-2 mr-sm-2" placeholder="Enter search term here" />
+            <p>You are searching for {{ searchTerm }}</p>
+            </div>
+            </div>
                 <div class = 'container'>
                 <div class = 'holder'>
                 <div class = 'row'>

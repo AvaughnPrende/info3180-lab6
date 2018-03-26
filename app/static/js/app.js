@@ -1,4 +1,4 @@
-/* Add your Application JavaScript */
+/* Add your Application JavaScript Here*/
 Vue.component('app-header', {
     template: `
         <header>
@@ -21,6 +21,7 @@ Vue.component('app-header', {
             </nav>
         </header>    
     `,
+    
     data: function() {}
 });
 

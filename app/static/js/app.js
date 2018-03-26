@@ -46,11 +46,18 @@ Vue.component('news-list',{
     template:`
         <div class="news">
             <h2>News</h2>
-            <ul class="news__list">
-                <li v-for = 'article in articles' class = 'news__item'>
-                    {{ article.title }}
-                </li>
-            </ul>
+                <div class = 'container'>
+                <div class = 'holder'>
+                <div class = 'row'>
+                <div v-for = 'article in articles' class = 'card col-md-3 box'>
+                    <h4>{{article.title}}</h4>
+                    <img :src = article.urlToImage height = '250px' width = '250px' alt = 'Image for news article'>
+                    <p>{{article.description}}</p>
+                
+                </div>   
+                </div>
+                </div>
+                </div>
         </div>
         `,
         created: function(){

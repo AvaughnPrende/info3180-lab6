@@ -5,3 +5,23 @@ body {
 footer  {
     padding-top: 20px;
 }
+
+
+.box {
+    margin:25px;
+    border-top:5px solid green;
+    border-radius:15px;
+    text-align: center;
+}
+
+.holder{
+    margin:auto;
+}
+
+.card{
+    width: 100px;
+}
+
+
+
+

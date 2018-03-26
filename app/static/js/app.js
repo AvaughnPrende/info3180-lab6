@@ -10,12 +10,12 @@ Vue.component('app-header', {
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">News</a>
-                  </li>
+                <li class="nav-item active">
+                    <router-link to="/" class="nav-link">Home</router-link>
+                </li>
+                <li class="nav-item active">
+                    <router-link to="/news" class="nav-link">News</router-link>
+                </li>
                 </ul>
               </div>
             </nav>
@@ -23,8 +23,6 @@ Vue.component('app-header', {
     `,
     data: function() {}
 });
-
-
 
 Vue.component('app-footer', {
     template: `
@@ -41,8 +39,21 @@ Vue.component('app-footer', {
     }
 })
 
+const Home = Vue.component('home', {
+     template: `
+        <div class="home">
+        <img src="/static/images/logo.png" alt="VueJS Logo">
+        <h1>{{ welcome }}</h1>
+        </div>
+ `,
+    data: function() {
+    return {
+    welcome: 'Hello World! Welcome to VueJS'
+    }
+ }
+});
 
-Vue.component('news-list',{
+let NewsList = Vue.component('news-list',{
     template:`
         <div class="news">
             <h2>News</h2>
@@ -52,7 +63,7 @@ Vue.component('news-list',{
             <label class="sr-only" for="search">Search</label>
             <input type="search" name="search" v-model="searchTerm"
             id="search" class="form-control mb-2 mr-sm-2" placeholder="Enter search term here" />
-            <p>You are searching for {{ searchTerm }}</p>
+            <button class="btn btn-primary mb-2" @click="searchNews">Search</button>
             </div>
             </div>
                 <div class = 'container'>
@@ -82,14 +93,37 @@ Vue.component('news-list',{
                     });
                 },
                 data: function() {
-                    return { articles: [] }
+                    return { 
+                        articles: [], 
+                        searchTerm: ""       
+                    }
+                },
+                methods: {
+                        searchNews: function() {
+                            let self = this;
+                            fetch('https://newsapi.org/v2/everything?q='+
+                            self.searchTerm + '&language=en&apiKey=b63b2a1e8f914e8cad30a9aaaf6ada0c')
+                            .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            console.log(data);
+                            self.articles = data.articles;
+                    });
                 }
-            });
+            } 
+        });
 
+const router = new VueRouter({
+                    mode: 'history',
+                    routes: [
+                    { path: '/', component: Home },
+                    { path: '/news', component: NewsList }
+                    ]
+                });
 
+            
 let app = new Vue({
     el: '#app',
-    data: {
-        welcome: 'Hello World! Welcome to VueJS'
-    }
+    router
 });
